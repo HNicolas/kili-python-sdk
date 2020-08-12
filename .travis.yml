@@ -25,6 +25,7 @@ jobs:
     #   --env KILI_API_ENDPOINT=https://staging.cloud.kili-technology.com/api/label/graphql \
     #   --env KILI_USER_API_KEY=${KILI_USER_API_KEY} \
     #   --env KILI_USER_ID=${KILI_USER_ID} \
+    #   --env KILI_USER_EMAIL=${KILI_USER_EMAIL} \
     #   --rm \
     #   -p 10000:8888 \
     #   ${DOCKER_IMAGE} /bin/sh -c "cd /root && \
