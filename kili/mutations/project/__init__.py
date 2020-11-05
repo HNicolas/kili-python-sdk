@@ -27,7 +27,7 @@ class MutationsProject:
         """
         self.auth = auth
 
-    @Compatible()
+    @Compatible(['v1', 'v2'])
     def append_to_roles(self, project_id: str, user_email: str, role: str):
         """
         Add a user to a project
@@ -136,7 +136,7 @@ class MutationsProject:
             GQL_UPDATE_PROPERTIES_IN_PROJECT, variables)
         return format_result('data', result)
 
-    @Compatible()
+    @Compatible(['v1', 'v2'])
     def create_empty_project(self, user_id: str):
         """
         Create an empty project
