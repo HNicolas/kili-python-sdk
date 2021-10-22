@@ -400,3 +400,4 @@ class MutationsProject:
         result = self.auth.client.execute(
             GQL_PROJECT_DELETE_ASYNCHRONOUSLY, variables)
         return format_result('data', result)
+

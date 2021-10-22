@@ -21,3 +21,19 @@ query($where: ProjectWhere!) {
   data: countProjects(where: $where)
 }
 '''
+
+
+GQL_PROJECT_EXPORT_DATA = f'''
+query(
+    $where: ProjectWhere!
+    $exportType: ExportType
+    $labelFormat: LabelFormat
+    $versionName: String) {{
+  data: exportData(
+      where: $where
+      exportType: $exportType
+      labelFormat: $labelFormat
+      versionName: $versionName
+    )
+}}
+'''

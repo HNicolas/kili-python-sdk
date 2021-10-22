@@ -38,8 +38,7 @@ class QueriesProjectVersion:
                 'id',
                 'content',
                 'name',
-                'project',
-                'projectId'],
+                'project.id'],
             project_id: str = None):
         # pylint: disable=line-too-long
         """

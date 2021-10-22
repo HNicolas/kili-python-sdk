@@ -6,7 +6,7 @@ from typing import Optional
 from typeguard import typechecked
 
 from ...helpers import Compatible, deprecate, format_result, fragment_builder
-from .queries import gql_projects, GQL_PROJECTS_COUNT
+from .queries import gql_projects, GQL_PROJECTS_COUNT, GQL_PROJECT_EXPORT_DATA
 from ...types import Project
 from ...constants import NO_ACCESS_RIGHT
 
@@ -153,3 +153,32 @@ class QueriesProject:
         result = self.auth.client.execute(GQL_PROJECTS_COUNT, variables)
         count = format_result('data', result)
         return count
+    
+    @Compatible(['v2'])
+    @typechecked
+    def export_data(self, project_id: str, export_type: str, label_format: str, version_name: str):
+        """
+        Export data
+
+        Parameters
+        ----------
+        - project_id : str
+        - export_type : str, either LATEST or NORMAL
+        - label_format : str, either RAW, SIMPLE, YOLO_V4_PYTORCH
+        - version_name : str
+
+        Returns
+        -------
+        - a string giving the name of the created file.
+        """
+        variables = {
+            'where': {
+                'id': project_id
+            },
+            'exportType': export_type,
+            'labelFormat': label_format,
+            'versionName': version_name,
+        }
+        result = self.auth.client.execute(
+            GQL_PROJECT_EXPORT_DATA, variables)
+        return format_result('data', result)
