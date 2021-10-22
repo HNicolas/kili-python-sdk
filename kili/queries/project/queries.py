@@ -23,7 +23,7 @@ query($where: ProjectWhere!) {
 '''
 
 
-GQL_PROJECT_EXPORT_DATA = f'''
+GQL_PROJECT_EXPORT_DATA = '''
 query(
     $where: ProjectWhere!
     $exportType: ExportType

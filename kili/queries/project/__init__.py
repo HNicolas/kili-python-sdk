@@ -153,7 +153,7 @@ class QueriesProject:
         result = self.auth.client.execute(GQL_PROJECTS_COUNT, variables)
         count = format_result('data', result)
         return count
-    
+
     @Compatible(['v2'])
     @typechecked
     def export_data(self, project_id: str, export_type: str, label_format: str, version_name: str):
