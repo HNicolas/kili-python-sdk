@@ -2,6 +2,7 @@
 This script defines object-relational mapping helpers to ease
  the manipulation of Kili data structures.
 """
+from typing import Dict
 from dataclasses import dataclass
 
 
@@ -144,7 +145,7 @@ class Label(DictClass):
     Label class
     """
 
-    jsonResponse = {}
+    jsonResponse: Dict = {}
 
     def json_response(self, _format=AnnotationFormat.Raw):
         """

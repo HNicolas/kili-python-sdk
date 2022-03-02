@@ -7,6 +7,7 @@ import base64
 import functools
 from json import dumps, loads
 import re
+
 import warnings
 import mimetypes
 import pyparsing as pp
@@ -287,9 +288,10 @@ def list_is_not_none_else_none(_object):
     return [_object] if _object is not None else None
 
 
-def infer_id_from_external_id(kili, asset_id: str, external_id: str, project_id: str):
+def infer_id_from_external_id(kili, asset_id: Optional[str], external_id: Optional[str], project_id: Optional[str]):
     """
-    Infer asset id from external id
+    Infer asset id from external id, or returns the asset_id if it passed as an argument.
+    Raises an Exception if no asset id is found.
 
     Args:
         asset_id: asset id
@@ -301,6 +303,8 @@ def infer_id_from_external_id(kili, asset_id: str, external_id: str, project_id:
             'Either provide asset_id or external_id and project_id')
     if asset_id is not None:
         return asset_id
+    if project_id is None:
+        raise Exception("If asset ID is inferred from external ID, project ID must be specified")
     assets = kili.assets(
         external_id_contains=[external_id], project_id=project_id, fields=['id'], disable_tqdm=True)
     if len(assets) == 0:

@@ -79,10 +79,13 @@ def process_content(input_type: str,
     Process the array of contents
     """
     if input_type in ['IMAGE', 'PDF']:
-        return [content if is_url(content) else (content
-            if (json_content_array is not None and json_content_array[i] is not None)
-            else (encode_base64(content) if check_file_mime_type(content, input_type) else None))
-            for i, content in enumerate(content_array)]
+        content_array = []
+        for i, content in enumerate(content_array):
+            if is_url(content) or (json_content_array is not None and json_content_array[i] is not None):
+                content_array.append(content)
+            else:
+                content_array.append(encode_base64(content))
+
     if input_type in ('VIDEO', 'FRAME') and json_content_array is None:
         content_array = [encode_object_if_not_url(content, input_type) for content in content_array]
     if input_type == 'TIME_SERIES':

@@ -1,6 +1,6 @@
 """User mutations."""
 
-from typing import Optional
+from typing import Optional, Dict, Any
 
 from typeguard import typechecked
 
@@ -126,7 +126,7 @@ class MutationsUser:
             A result object which indicates if the mutation was successful,
                 or an error message.
         """
-        variables = {
+        variables: Dict[str, Any] = {
             'email': email,
         }
         if firstname is not None:

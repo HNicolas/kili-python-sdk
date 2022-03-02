@@ -2,7 +2,7 @@
 Lock queries
 """
 
-from typing import Generator, List, Optional, Union
+from typing import Generator, List, Optional, Union, Any
 import warnings
 from typeguard import typechecked
 
@@ -91,7 +91,7 @@ class QueriesLock:
 
     @Compatible(['v1', 'v2'])
     @typechecked
-    def count_locks(self: any) -> int:
+    def count_locks(self: Any) -> int:
         """Get the number of locks
 
         Args:
