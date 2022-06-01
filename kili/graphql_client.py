@@ -133,7 +133,8 @@ class SubscriptionGraphQLClient:
         print(f'{dt_string} reconnected')
         self.failed_connection_attempts = 0
 
-    def _on_message(self, message):
+    @staticmethod
+    def _on_message(message):
         """
         Handles messages
 
