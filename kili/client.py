@@ -6,6 +6,8 @@ import os
 from kili.exceptions import NotFound
 from kili.mutations.api_key import MutationsApiKey
 from kili.mutations.asset import MutationsAsset
+from kili.mutations.comment import MutationsComment
+from kili.mutations.comment import MutationsIssue
 from kili.mutations.label import MutationsLabel
 from kili.mutations.notification import MutationsNotification
 from kili.mutations.organization import MutationsOrganization
@@ -31,33 +33,39 @@ from kili.authentication import KiliAuth
 
 
 class Kili(  # pylint: disable=too-many-ancestors
-        MutationsApiKey,
-        MutationsAsset,
-        MutationsLabel,
-        MutationsNotification,
-        MutationsOrganization,
-        MutationsProject,
-        MutationsProjectVersion,
-        MutationsUser,
-        QueriesApiKey,
-        QueriesAsset,
-        QueriesIssue,
-        QueriesLabel,
-        QueriesLock,
-        QueriesOrganization,
-        QueriesNotification,
-        QueriesProject,
-        QueriesProjectUser,
-        QueriesProjectVersion,
-        QueriesUser,
-        SubscriptionsLabel):
+    MutationsApiKey,
+    MutationsAsset,
+    MutationsComment,
+    MutationsIssue,
+    MutationsLabel,
+    MutationsNotification,
+    MutationsOrganization,
+    MutationsProject,
+    MutationsProjectVersion,
+    MutationsUser,
+    QueriesApiKey,
+    QueriesAsset,
+    QueriesIssue,
+    QueriesLabel,
+    QueriesLock,
+    QueriesOrganization,
+    QueriesNotification,
+    QueriesProject,
+    QueriesProjectUser,
+    QueriesProjectVersion,
+    QueriesUser,
+    SubscriptionsLabel,
+):
     """
     Kili Client.
     """
 
-    def __init__(self, api_key=os.getenv('KILI_API_KEY'),
-                 api_endpoint='https://cloud.kili-technology.com/api/label/v2/graphql',
-                 verify=True):
+    def __init__(
+        self,
+        api_key=os.getenv("KILI_API_KEY"),
+        api_endpoint="https://cloud.kili-technology.com/api/label/v2/graphql",
+        verify=True,
+    ):
         """
         Args:
             api_key: User API key generated
@@ -74,8 +82,7 @@ class Kili(  # pylint: disable=too-many-ancestors
                 - your labels with: `kili.labels()`
                 - your projects with: `kili.projects()`
         """
-        self.auth = KiliAuth(
-            api_key=api_key, api_endpoint=api_endpoint, verify=verify)
+        self.auth = KiliAuth(api_key=api_key, api_endpoint=api_endpoint, verify=verify)
         super().__init__(self.auth)
 
     def get_project(self, project_id: str) -> Project:
@@ -88,12 +95,15 @@ class Kili(  # pylint: disable=too-many-ancestors
         raise:
             NotFound if the given `project_id` does not correspond to an existing project
         """
-        projects_response = self.projects(project_id=project_id,
-                                          disable_tqdm=True, fields=['inputType', 'title'])
+        projects_response = self.projects(
+            project_id=project_id, disable_tqdm=True, fields=["inputType", "title"]
+        )
 
         if len(projects_response) == 0:
             raise NotFound(str(project_id))
         project_fields = projects_response[0]
-        title = project_fields['title']
-        input_type = project_fields['inputType']
-        return Project(client=self, project_id=project_id, input_type=input_type, title=title)
+        title = project_fields["title"]
+        input_type = project_fields["inputType"]
+        return Project(
+            client=self, project_id=project_id, input_type=input_type, title=title
+        )
